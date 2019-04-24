@@ -16,7 +16,7 @@ NEWSPIDER_MODULE = 'scrapy_albums.spiders'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'scrapy_albums (+http://www.yourdomain.com)'
+# USER_AGENT = 'scrapy_albums (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
@@ -88,3 +88,6 @@ ROBOTSTXT_OBEY = True
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+
+LOG_STDOUT = True
+LOG_FILE = '/tmp/scrapy_output.log'
