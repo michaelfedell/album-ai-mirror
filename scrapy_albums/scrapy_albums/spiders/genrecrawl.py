@@ -28,6 +28,19 @@ class GenrecrawlSpider(scrapy.Spider):
         # follow links to album pages
         for a in response.css('.albumListCover a'):
             yield response.follow(a, callback=self.parse_album)
+        next_link = response.xpath('//div[contains(text(), "NEXT")]/../@href').get()
+        if next_link:
+            yield response.follow(next_link, callback=self.parse_page)
+
+
+    def parse_page(self, response):
+        # follow links to album pages
+        for a in response.css('.albumListCover a'):
+            yield response.follow(a, callback=self.parse_album)
+        next_link = response.xpath('//div[contains(text(), "NEXT")]/../@href').get()
+        if next_link:
+            yield response.follow(next_link, callback=self.parse_page)
+
 
     def parse_album(self, response):
         url = response.url
