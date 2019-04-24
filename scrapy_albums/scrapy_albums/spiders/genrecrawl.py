@@ -44,7 +44,7 @@ class GenrecrawlSpider(scrapy.Spider):
 
     def parse_album(self, response):
         url = response.url
-        referred = response.request.headers.get('referrer')
+        referred = response.request.headers.get('referrer').decode('utf-8')
 
         artist = response.xpath('//div[@class="artist"]/span/a/span/text()').get()
         album = response.xpath('//div[@class="albumTitle"]/span/text()').get()
