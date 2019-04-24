@@ -15,7 +15,7 @@ class GenrecrawlSpider(scrapy.Spider):
         links2 = box.xpath('./div[3]/div')
         # Get the link for each genre in the two columns and start with 2010s
         links = [l.css('div a::attr(href)').get() for l in (links1 + links2)]
-        links = [l + '/2010s/' for l in links]
+        links = [l + '2010s/' for l in links]
         for l in links:
             yield response.follow(l, callback=self.parse_decade)
 
@@ -24,7 +24,7 @@ class GenrecrawlSpider(scrapy.Spider):
         # If the page has results, go back one decade and look for more
         if response.css('noResultsMessage') is not None:
             prev_decade = response.xpath('//*[contains(@class, "yearNavBoxArrow")]/../@href').get()
-            response.follow(prev_decade, callback=self.parse_decade)
+            yield response.follow(prev_decade, callback=self.parse_decade)
         # follow links to album pages
         for a in response.css('.albumListCover a'):
             yield response.follow(a, callback=self.parse_album)
