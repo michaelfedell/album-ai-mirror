@@ -27,7 +27,7 @@ class GenrecrawlSpider(scrapy.Spider):
             yield response.follow(prev_decade, callback=self.parse_decade)
         # follow links to album pages
         for a in response.css('.albumListCover a'):
-            yield response.follow(a, callback=self.parse_album)
+            yield response.follow(a, callback=self.parse_album, headers={'referrer': response.url})
         next_link = response.xpath('//div[contains(text(), "NEXT")]/../@href').get()
         if next_link:
             yield response.follow(next_link, callback=self.parse_page)
@@ -36,7 +36,7 @@ class GenrecrawlSpider(scrapy.Spider):
     def parse_page(self, response):
         # follow links to album pages
         for a in response.css('.albumListCover a'):
-            yield response.follow(a, callback=self.parse_album)
+            yield response.follow(a, callback=self.parse_album, headers={'referrer': response.url})
         next_link = response.xpath('//div[contains(text(), "NEXT")]/../@href').get()
         if next_link:
             yield response.follow(next_link, callback=self.parse_page)
@@ -44,7 +44,7 @@ class GenrecrawlSpider(scrapy.Spider):
 
     def parse_album(self, response):
         url = response.url
-        #referred = response.request.headers.get('referer_url')
+        referred = response.request.headers.get('referrer')
 
         artist = response.xpath('//div[@class="artist"]/span/a/span/text()').get()
         album = response.xpath('//div[@class="albumTitle"]/span/text()').get()
@@ -76,7 +76,7 @@ class GenrecrawlSpider(scrapy.Spider):
 
         yield {
             'url': url,
-            #'referred': referred,
+            'referred': referred,
 
             'artist': artist,
             'album': album,
