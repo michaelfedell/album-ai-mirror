@@ -19,6 +19,12 @@ conda env create -f environment.yml
 conda activate album-ai
 ```
 
+If you need to update the project's dependencies, be sure to include an updated `environment.yml` file in your Pull Request (this can be done with)
+
+```shell
+conda env export > environment.yml
+```
+
 Data will be kept in the `data/` folder, but ignored from git. If you are new to this project, you will first need to build the training data from the raw source data. This can be done automatically by running TODO: build scripts
 
 TODO: This section will be updated once more progress has been made.
