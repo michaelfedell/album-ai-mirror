@@ -9,6 +9,9 @@ albumCoverFolder = 'albumArt'
 numberAlbums = 5
 albumsRead = 0
 
+if not os.path.isfile(os.path.join(dataPath, albumFile)):
+    raise FileNotFoundError('The albums.jl file could no be found')
+
 with open(os.path.join(dataPath, albumFile)) as f:
     for album in f:
         # if albumsRead >= numberAlbums:

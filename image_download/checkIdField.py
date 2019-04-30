@@ -33,3 +33,5 @@ f.close()
 
 if checkDups(albumIds):
     raise Exception('Duplicates found')
+else:
+    print('No duplicate ID\'s found')
